@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <h1 class="mb-0">{{ book.title }}</h1>
+
+    <div class="d-flex gap-2 flex-wrap">
+        <a href="{% url 'home' %}" class="btn btn-outline-light">К каталогу</a>
+
+        {% if role == 'Администратор' or role == 'Модератор' %}
+            <a href="{% url 'book_update' book.pk %}" class="btn btn-outline-warning">Редактировать</a>
+        {% endif %}
+
+        {% if role == 'Администратор' %}
+            <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteBookModal">
+                Удалить
+            </button>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card-dark p-3">
+            {% if book.cover %}
+                <img src="{{ book.cover.image.url }}" class="img-fluid rounded" alt="{{ book.title }}">
+            {% else %}
+                <div class="empty-cover">Обложка не загружена</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card-dark p-4 h-100">
+            <dl class="row mb-0">
+                <dt class="col-sm-4">Автор</dt>
+                <dd class="col-sm-8">{{ book.author }}</dd>
+
+                <dt class="col-sm-4">Год</dt>
+                <dd class="col-sm-8">{{ book.year }}</dd>
+
+                <dt class="col-sm-4">Издательство</dt>
+                <dd class="col-sm-8">{{ book.publisher }}</dd>
+
+                <dt class="col-sm-4">Объём</dt>
+                <dd class="col-sm-8">{{ book.pages }} стр.</dd>
+
+                <dt class="col-sm-4">Жанры</dt>
+                <dd class="col-sm-8">
+                    {% for genre in book.genres.all %}
+                        <span class="badge text-bg-secondary">{{ genre.name }}</span>
+                    {% empty %}
+                        —
+                    {% endfor %}
+                </dd>
+            </dl>
+
+            <hr>
+
+            <h2 class="h4">Описание</h2>
+            <div class="markdown-body">
+                {{ html_description }}
+            </div>
+
+            {% if role == 'Пользователь' %}
+                <div class="mt-4">
+                    {% if user_collections %}
+                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addToCollectionModal">
+                            Добавить в подборку
+                        </button>
+                    {% else %}
+                        <a href="{% url 'my_collections' %}" class="btn btn-outline-warning">Создать подборку</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h2 class="mb-0">Рецензии</h2>
+
+    {% if user.is_authenticated and can_review and not user_review %}
+        <a href="{% url 'review_create' book.pk %}" class="btn btn-warning">Написать рецензию</a>
+    {% endif %}
+</div>
+
+{% if user_review %}
+    <div class="alert alert-info d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <span>Вы уже оставили рецензию на эту книгу. Ниже она отображается в общем списке рецензий.</span>
+        <a href="{% url 'review_update' book.pk %}" class="btn btn-sm btn-outline-primary">Редактировать рецензию</a>
+    </div>
+{% elif not user.is_authenticated %}
+    <div class="alert alert-secondary">
+        Чтобы оставить рецензию, нужно войти в систему.
+    </div>
+{% endif %}
+
+<div class="row g-3">
+    {% for review in reviews %}
+        <div class="col-12">
+            <div class="card-dark p-4">
+                <div class="d-flex justify-content-between flex-wrap gap-2 mb-2">
+                    <strong>
+                        {{ review.user.last_name }} {{ review.user.first_name }}{% if review.user.profile.middle_name %} {{ review.user.profile.middle_name }}{% endif %}
+                    </strong>
+                    <span class="badge badge-rating">{{ review.score }} — {{ review.get_score_display }}</span>
+                </div>
+
+                <div class="text-muted-custom mb-2">
+                    {{ review.created_at|date:'d.m.Y H:i' }}
+                </div>
+
+                <div class="markdown-body">
+                    {{ review.html_text }}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>Рецензий пока нет.</p>
+    {% endfor %}
+</div>
+
+{% if role == 'Пользователь' and user_collections %}
+<div class="modal fade" id="addToCollectionModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{% url 'add_to_collection' book.pk %}">
+                {% csrf_token %}
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Добавить в подборку</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <label class="form-label">Выберите подборку</label>
+                    <select name="collection_id" class="form-select" required>
+                        {% for collection in user_collections %}
+                            <option value="{{ collection.pk }}">{{ collection.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-warning">Добавить</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if role == 'Администратор' %}
+<div class="modal fade" id="deleteBookModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{% url 'book_delete' book.pk %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Удаление книги</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Вы уверены, что хотите удалить книгу «{{ book.title }}»?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger">Да</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

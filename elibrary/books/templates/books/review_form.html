@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if is_update %}Редактирование рецензии{% else %}Новая рецензия{% endif %}{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{% if is_update %}Редактирование рецензии{% else %}Новая рецензия{% endif %} на книгу «{{ book.title }}»</h1>
+
+<div class="card-dark p-4">
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label" for="{{ form.score.id_for_label }}">{{ form.score.label }}</label>
+            {{ form.score }}
+            {% if form.score.errors %}<div class="text-danger small">{{ form.score.errors }}</div>{% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="{{ form.text.id_for_label }}">{{ form.text.label }}</label>
+            {{ form.text }}
+            {% if form.text.errors %}<div class="text-danger small">{{ form.text.errors }}</div>{% endif %}
+        </div>
+
+        <button class="btn btn-warning">Сохранить</button>
+        <a href="{% url 'book_detail' book.pk %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+<script>
+    const textarea = document.querySelector('textarea[name="text"]');
+    if (textarea) {
+        new EasyMDE({ element: textarea, spellChecker: false });
+    }
+</script>
+{% endblock %}

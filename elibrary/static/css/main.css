@@ -1,0 +1,413 @@
+/* ===== MangaLib-like UI override ===== */
+
+:root {
+    --bg: #0f1014;
+    --panel: #181a20;
+    --panel-2: #20232b;
+    --panel-3: #2a2d36;
+    --text: #f5f5f7;
+    --muted: #a4a8b3;
+    --accent: #ff9f2d;
+    --accent-hover: #ffb14a;
+    --danger: #ff4d4f;
+    --radius: 16px;
+}
+
+/* Общий фон */
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+}
+
+/* Верхняя панель */
+.topbar {
+    background: rgba(24, 26, 32, 0.96);
+    border-bottom: 1px solid #2a2d36;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Логотип */
+.brand {
+    color: var(--text);
+    font-weight: 800;
+    letter-spacing: 0.3px;
+}
+
+.brand:hover {
+    color: var(--accent);
+}
+
+/* Навигация */
+.nav-link {
+    color: var(--muted);
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 8px 12px;
+    transition: 0.2s;
+}
+
+.nav-link:hover {
+    color: var(--text);
+    background: var(--panel-2);
+}
+
+/* Все кнопки */
+.btn {
+    border-radius: 999px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-width: 1px;
+    transition: 0.2s ease;
+}
+
+.btn-sm {
+    padding: 6px 13px;
+    font-size: 14px;
+}
+
+.btn-lg {
+    padding: 11px 22px;
+    font-size: 16px;
+}
+
+/* Главная оранжевая кнопка */
+.btn-warning,
+.btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #111214;
+}
+
+.btn-warning:hover,
+.btn-primary:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+    color: #111214;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(255, 159, 45, 0.25);
+}
+
+/* Светлая контурная кнопка */
+.btn-outline-light {
+    color: var(--text);
+    border-color: var(--panel-3);
+    background: var(--panel-2);
+}
+
+.btn-outline-light:hover {
+    color: var(--text);
+    background: var(--panel-3);
+    border-color: var(--panel-3);
+    transform: translateY(-1px);
+}
+
+/* Оранжевая контурная кнопка */
+.btn-outline-warning {
+    color: var(--accent);
+    border-color: rgba(255, 159, 45, 0.45);
+    background: rgba(255, 159, 45, 0.08);
+}
+
+.btn-outline-warning:hover {
+    color: #111214;
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+/* Красная кнопка */
+.btn-outline-danger,
+.btn-danger {
+    color: #fff;
+    background: rgba(255, 77, 79, 0.12);
+    border-color: rgba(255, 77, 79, 0.5);
+}
+
+.btn-outline-danger:hover,
+.btn-danger:hover {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* Вторичная кнопка */
+.btn-secondary {
+    background: var(--panel-3);
+    border-color: var(--panel-3);
+    color: var(--text);
+}
+
+.btn-secondary:hover {
+    background: #363a45;
+    border-color: #363a45;
+}
+
+/* Карточки книг */
+.card-dark {
+    background: var(--panel);
+    border: 1px solid #282b34;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+    transition: 0.2s ease;
+}
+
+.card-dark:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 159, 45, 0.45);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+}
+
+/* Обложки */
+.book-cover {
+    height: 320px;
+    object-fit: cover;
+    background: var(--panel-2);
+}
+
+/* Название книги */
+.book-title {
+    color: var(--text);
+    font-size: 17px;
+    font-weight: 800;
+    text-decoration: none;
+    line-height: 1.25;
+}
+
+.book-title:hover {
+    color: var(--accent);
+}
+
+/* Жанры */
+.badge {
+    border-radius: 999px;
+    font-weight: 600;
+    padding: 6px 9px;
+}
+
+.text-bg-secondary {
+    background: var(--panel-3) !important;
+    color: var(--muted) !important;
+}
+
+/* Оценка */
+.badge-rating {
+    background: rgba(255, 159, 45, 0.16);
+    color: var(--accent);
+    border: 1px solid rgba(255, 159, 45, 0.35);
+}
+
+/* Формы */
+.form-control,
+.form-select {
+    background: var(--panel-2);
+    border: 1px solid #303440;
+    color: var(--text);
+    border-radius: 12px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: var(--panel-2);
+    color: var(--text);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255, 159, 45, 0.18);
+}
+
+/* Модальные окна */
+.modal-content {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid #2a2d36;
+    border-radius: 18px;
+}
+
+.modal-header,
+.modal-footer {
+    border-color: #2a2d36;
+}
+
+/* Таблицы */
+.table-dark {
+    --bs-table-bg: var(--panel);
+    --bs-table-border-color: #2a2d36;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+/* Пагинация */
+.page-link {
+    background: var(--panel);
+    border-color: #2a2d36;
+    color: var(--text);
+    border-radius: 10px;
+    margin: 0 3px;
+}
+
+.page-link:hover {
+    background: var(--panel-2);
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.page-item.active .page-link {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #111214;
+}
+
+/* Flash-сообщения */
+.alert {
+    border-radius: 14px;
+    border: none;
+    font-weight: 600;
+}
+
+/* ===== Footer ===== */
+
+.site-footer {
+    background: linear-gradient(180deg, rgba(24, 26, 32, 0.96), #111217);
+    border-top: 1px solid #2a2d36;
+    color: var(--text);
+    padding: 34px 0 18px;
+}
+
+.footer-inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 28px;
+    align-items: flex-start;
+}
+
+.footer-logo {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.footer-text {
+    color: var(--muted);
+    line-height: 1.5;
+    max-width: 520px;
+}
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.footer-title {
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 6px;
+}
+
+.footer-link {
+    color: var(--muted);
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.footer-link:hover {
+    color: var(--accent);
+    transform: translateX(3px);
+}
+
+.footer-user {
+    color: var(--text);
+    font-weight: 700;
+    background: var(--panel-2);
+    border: 1px solid #2a2d36;
+    border-radius: 999px;
+    padding: 7px 12px;
+    width: fit-content;
+}
+
+.footer-bottom {
+    margin-top: 26px;
+    padding-top: 16px;
+    border-top: 1px solid #2a2d36;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .footer-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+    }
+}
+
+/* ===== Auth tabs like lib.social ===== */
+
+.auth-card-lib {
+    max-width: 480px;
+}
+
+.auth-tabs {
+    display: flex;
+    background: var(--panel-2);
+    border: 1px solid #2a2d36;
+    border-radius: 999px;
+    padding: 4px;
+    margin-bottom: 24px;
+}
+
+.auth-tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 14px;
+    border-radius: 999px;
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 800;
+    transition: 0.2s ease;
+}
+
+.auth-tab:hover {
+    color: var(--text);
+    background: var(--panel-3);
+}
+
+.auth-tab.active {
+    color: #111214;
+    background: var(--accent);
+    box-shadow: 0 8px 20px rgba(255, 159, 45, 0.24);
+}
+
+.auth-main-btn {
+    width: 100%;
+    height: 46px;
+    margin-top: 8px;
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.auth-agreement {
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.45;
+    text-align: center;
+}
+
+.auth-info {
+    margin-top: 14px;
+    background: rgba(255, 159, 45, 0.08);
+    border: 1px solid rgba(255, 159, 45, 0.24);
+    color: var(--muted);
+    border-radius: 14px;
+    padding: 12px 14px;
+    font-size: 13px;
+    text-align: center;
+}

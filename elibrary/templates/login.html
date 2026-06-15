@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card auth-card-lib">
+        <div class="auth-tabs">
+            <a href="{% url 'login' %}" class="auth-tab active">Вход</a>
+            <a href="{% url 'register' %}" class="auth-tab">Регистрация</a>
+        </div>
+
+        <h1 class="auth-title text-center">Вход</h1>
+        <p class="auth-subtitle text-center">
+            Войдите в аккаунт, чтобы оставлять рецензии и работать с подборками книг.
+        </p>
+
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label" for="id_username">Логин</label>
+                <input type="text" name="username" id="id_username" class="form-control" required autofocus>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="id_password">Пароль</label>
+                <input type="password" name="password" id="id_password" class="form-control" required>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="remember_me" id="remember">
+                <label class="form-check-label" for="remember">
+                    Запомнить меня
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-warning auth-main-btn">
+                Войти
+            </button>
+        </form>
+
+        <div class="auth-bottom">
+            Нет аккаунта?
+            <a href="{% url 'register' %}">Зарегистрироваться</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}
