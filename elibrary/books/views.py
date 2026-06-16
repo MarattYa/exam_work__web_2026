@@ -100,7 +100,7 @@ def book_list(request):
         .order_by('-year', '-id')
     )
 
-    paginator = Paginator(books, 10)
+    paginator = Paginator(books, 12)
     page_obj = paginator.get_page(request.GET.get('page'))
 
     return render(request, 'books/index.html', {

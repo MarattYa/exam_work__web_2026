@@ -348,66 +348,56 @@ body {
     }
 }
 
-/* ===== Auth tabs like lib.social ===== */
+/* ===== Fix auth position and remove lift animations ===== */
 
-.auth-card-lib {
-    max-width: 480px;
-}
-
-.auth-tabs {
+/* Страница входа и регистрации строго по центру */
+.auth-page {
+    min-height: calc(100vh - 90px);
     display: flex;
-    background: var(--panel-2);
-    border: 1px solid #2a2d36;
-    border-radius: 999px;
-    padding: 4px;
-    margin-bottom: 24px;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
 }
 
-.auth-tab {
-    flex: 1;
-    text-align: center;
-    padding: 10px 14px;
-    border-radius: 999px;
-    color: var(--muted);
-    text-decoration: none;
-    font-weight: 800;
-    transition: 0.2s ease;
-}
-
-.auth-tab:hover {
-    color: var(--text);
-    background: var(--panel-3);
-}
-
-.auth-tab.active {
-    color: #111214;
-    background: var(--accent);
-    box-shadow: 0 8px 20px rgba(255, 159, 45, 0.24);
-}
-
-.auth-main-btn {
+/* Карточка входа/регистрации */
+.auth-card,
+.auth-card-lib {
     width: 100%;
-    height: 46px;
-    margin-top: 8px;
-    font-size: 15px;
-    font-weight: 900;
+    max-width: 480px;
+    margin: 0 auto;
 }
 
-.auth-agreement {
-    margin-top: 18px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.45;
-    text-align: center;
+/* Если форма находится внутри обычного container — тоже центрируем */
+main .auth-page {
+    width: 100%;
 }
 
-.auth-info {
-    margin-top: 14px;
-    background: rgba(255, 159, 45, 0.08);
-    border: 1px solid rgba(255, 159, 45, 0.24);
-    color: var(--muted);
-    border-radius: 14px;
-    padding: 12px 14px;
-    font-size: 13px;
-    text-align: center;
+/* Убираем поднятие карточек */
+.card-dark:hover {
+    transform: none !important;
+}
+
+/* Убираем поднятие кнопок */
+.btn:hover,
+.btn-warning:hover,
+.btn-primary:hover,
+.btn-outline-light:hover,
+.btn-outline-warning:hover,
+.btn-outline-danger:hover,
+.btn-danger:hover,
+.btn-secondary:hover {
+    transform: none !important;
+}
+
+/* Убираем сдвиг ссылок в footer */
+.footer-link:hover {
+    transform: none !important;
+}
+
+/* Убираем любые лишние резкие анимации */
+.btn,
+.card-dark,
+.footer-link,
+.auth-tab {
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
